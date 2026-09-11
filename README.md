@@ -7,7 +7,7 @@ Este repositorio contiene **9 problemas** progresivos para que un estudiante des
 1. Prepara el ambiente de desarrollo como se indicó en el Taller #0.
 
 
-2. Ingresa a `https://github.com/UR-CC/lp1-taller1` y realiza un **fork** con tu cuenta.
+2. Ingresa a `https://github.com/clubdecomputacion/lp1-taller1` y realiza un **fork** con tu cuenta.
 
 3. Clona tu **fork** del repositorio `lp1-taller1`:
 
