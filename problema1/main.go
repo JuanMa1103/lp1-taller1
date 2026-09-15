@@ -10,7 +10,7 @@ import (
 // TODO: Completa los pasos marcados con TODO para entender goroutines y WaitGroup.
 
 func worker(id int, veces int, wg *sync.WaitGroup) {
-	// TODO: asegurar que al finalizar la función se haga wg.Done()
+	// TODO: asegurar que al finalizar la función se haga wg.Done() trabajo
 	
 
 	for i := 1; i <= veces; i++ {
