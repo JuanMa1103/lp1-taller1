@@ -11,12 +11,12 @@ import (
 
 func worker(id int, veces int, wg *sync.WaitGroup) {
 	// TODO: asegurar que al finalizar la función se haga wg.Done() trabajo prueba 2
-	
+	defer wg.Done()
 
 	for i := 1; i <= veces; i++ {
 		fmt.Printf("[worker %d] hola %d\n", id, i)
 		// TODO: dormir un poco para simular trabajo (p. ej. 100–300 ms)
-		
+		time.Sleep(300 * time.Millisecond)
 	}
 }
 
@@ -26,13 +26,17 @@ func main() {
 	// TODO: cambiar estos parámetros y observar el intercalado de salidas
 	// numGoroutines
 	// veces
-
+	numGoroutines := 4
+	veces := 5
+	
 	// TODO: lanzar varias goroutines, sumar al WG y esperar con wg.Wait()
 	for id := 1; id <= numGoroutines; id++ {
-
+		wg.Add(1)
+		go worker(id, veces, &wg)
 	}
 
 	// Esperar a que todas las goroutines terminen
-	
+	wg.Wait()
+
 	fmt.Println("Listo: todas las goroutines terminaron.")
 }
