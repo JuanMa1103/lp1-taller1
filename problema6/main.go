@@ -20,10 +20,14 @@ func deadlock() {
 		defer wg.Done()
 		fmt.Println("G1: Lock mu1") 
 		// TODO: adquirir mu1
+		mu1.Lock()
+		defer mu1.Unlock()
 
 		time.Sleep(100 * time.Millisecond) // fuerza entrelazado
 		fmt.Println("G1: Lock mu2") 
 		// TODO: adquirir mu2
+		mu2.Lock()
+		defer mu2.Unlock()
 
 		fmt.Println("G1: listo")
 	}()
@@ -32,10 +36,14 @@ func deadlock() {
 		defer wg.Done()
 		fmt.Println("G2: Lock mu2") 
 		// TODO: adquirir mu2
+		mu2.Lock()
+		defer mu2.Unlock()
 
 		time.Sleep(100 * time.Millisecond)
 		fmt.Println("G2: Lock mu1") 
 		// TODO: adquirir mu1
+		mu1.Lock()
+		defer mu1.Unlock()
 
 		fmt.Println("G2: listo")
 	}()
@@ -54,9 +62,13 @@ func seguroOrdenado() {
 		// retorna: lock():unlock()
 		return func() func() {
 			// TODO: adquirir a luego b
+			a.Lock()
+			b.Lock()
 
 			return func() {
 				// TODO: liberar b luego a
+				b.Unlock()
+				a.Unlock()
 
 			}
 		}
