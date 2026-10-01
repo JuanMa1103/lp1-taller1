@@ -49,6 +49,7 @@ func incrementarConMutex(nGoroutines, nIncrementos int) int64 {
 				// TODO: proteger la sección crítica con mu.Lock()/mu.Unlock()
 				mu.Lock()
 				contador = contador + 1
+				mu.Unlock()
 			}
 		}()
 	}
