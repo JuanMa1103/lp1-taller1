@@ -25,7 +25,8 @@ func (db *baseDatos) leer(clave string) (int, bool) {
 
 func (db *baseDatos) escribir(clave string, valor int) {
 	// TODO: usar Lock/Unlock para escritura
-
+	db.mu.Lock()
+	defer db.mu.Unlock()
 	db.m[clave] = valor
 }
 
