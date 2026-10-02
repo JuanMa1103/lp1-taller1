@@ -16,19 +16,37 @@ type tenedor struct{ mu sync.Mutex }
 
 func filosofo(id int, izq, der *tenedor, wg *sync.WaitGroup) {
 	// TODO: desarrolla el código para el filósofo
-	
+	defer wg.Done()
+
+	pensar(id)
+	primero, segundo := izq, der
+
+	primero.mu.Lock()
+	segundo.mu.Lock()
+
+	comer(id)
+
+	segundo.mu.Unlock()
+	primero.mu.Unlock()
+
+
 	fmt.Printf("[filósofo %d] satisfecho\n", id)
+
+
 }
+
 
 func pensar(id int) {
 	fmt.Printf("[filósofo %d] pensando...\n", id)
 	// TODO: simular tiempo de pensar
+	time.Sleep(100 * time.Millisecond)
 
 }
 
 func comer(id int) {
 	fmt.Printf("[filósofo %d] COMIENDO\n", id)
 	// TODO: simular tiempo de pensar
+	time.Sleep(200 * time.Millisecond)
 
 }
 
@@ -41,6 +59,7 @@ func main() {
 	forks := make([]*tenedor, n)
 	for i := 0; i < n; i++ {
 		// TODO: inicializar cada tenedor i
+		forks[i] = &tenedor{}
 
 	}
 
@@ -49,6 +68,7 @@ func main() {
 		izq := forks[i]
 		der := forks[(i+1)%n]
 		// TODO: lanzar goroutine para el filósofo i
+		go filosofo(i, izq, der, &wg)
 
 	}
 
